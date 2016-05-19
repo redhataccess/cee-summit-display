@@ -6,29 +6,11 @@ import partial from 'lodash/partial';
 
 const graph = new Springy.Graph();
 
-// const a1 = graph.newNode({ label: 'a1', group: 'a' });
-// const a2 = graph.newNode({ label: 'a2', group: 'a' });
-// const a3 = graph.newNode({ label: 'a3', group: 'a' });
-// const a4 = graph.newNode({ label: 'a4', group: 'a' });
-// const b1 = graph.newNode({ label: 'b1', group: 'b' });
-// const b2 = graph.newNode({ label: 'b2', group: 'b' });
-// const b3 = graph.newNode({ label: 'b3', group: 'b' });
-
-// graph.newEdge(a1, a2);
-// graph.newEdge(a1, a3);
-// graph.newEdge(a1, a4);
-// graph.newEdge(a2, a3);
-// graph.newEdge(a2, a4);
-// graph.newEdge(a3, a4);
-
-// graph.newEdge(b1, b2);
-// graph.newEdge(b2, b3);
-
 const layout = new Springy.Layout.ForceDirected(
     graph,
-    250,
-    800,
-    0.3
+    150,
+    2500,
+    0.1
 );
 
 const renderer = new Springy.Renderer(
