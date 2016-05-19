@@ -6,6 +6,7 @@
         "spaced-comment": 0,
         "indent": ["error", 4],
         "no-unused-vars": ["error", { "args": "none" }],
+        "brace-style": ["error", "stroustrup"],
         "strict": 0
     }
 }

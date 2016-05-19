@@ -12,7 +12,7 @@ function update() {
 }
 
 function init() {
-    model.moveNode(view.moveNode);
+    model.updateNode(view.updateNode);
     update(); // start the update loop
 }
 

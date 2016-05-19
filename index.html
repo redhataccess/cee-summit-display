@@ -4,9 +4,31 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>CEE Summit Display</title>
+        <style type="text/css" media="screen">
+        .node {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            transform: rotate(45deg);
+            background-color: #cc0000;
+        }
+        .group-a { background-color: #00cc00; }
+        .group-b { background-color: #cc0000; }
+        #graph {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        </style>
     </head>
     <body>
-        <h1>hi</h1>
+        <div id="graph"></div>
     </body>
 
     <script src="build/client/bundle.js"></script>
