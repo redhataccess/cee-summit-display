@@ -12,6 +12,7 @@ const PORT = 8808;
 const INTERVAL = 50; // ms
 
 let wsServer;
+let lastId = 0;
 
 // TODO: before starting server, fetch all past state from Mongo and add it to
 // the initial buffer, so a restarted client app will be caught up with past
@@ -30,7 +31,7 @@ server.register(HapiWebSocket, () => {
         method: 'POST',
         path: '/record',
         handler: (request, reply) => {
-            buffer.push(request.payload);
+            buffer.push({ id: ++lastId, data: request.payload });
             reply('recorded');
         },
     });

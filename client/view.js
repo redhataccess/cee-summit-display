@@ -6,6 +6,21 @@ const MAX_PARTICLE_COUNT = 5000;
 const ALIVE              = 1;
 const DEAD               = 0;
 
+const COLOR_BUCKET = [
+    new THREE.Color(0x990000),
+    new THREE.Color(0xCFE2F3),
+    new THREE.Color(0x666666),
+    new THREE.Color(0xF1C232),
+    new THREE.Color(0x134F5C),
+    new THREE.Color(0x000000),
+    new THREE.Color(0xCC0000),
+    new THREE.Color(0x76A5AF),
+    new THREE.Color(0xE5E310),
+    new THREE.Color(0x76E0EE),
+];
+
+const GROUP_COLORS = {};
+
 let HEIGHT;
 let WIDTH;
 let HALF_HEIGHT;
@@ -28,36 +43,34 @@ function initParticles() {
             type : 't',
             value : new THREE.TextureLoader().load('./client/img/particle.png'),
         },
-        TIMER_MAX : { type : 'f', value : PARTICLE_DURATION },
-        size      : { type : 'f', value : 7 },
+        size      : { type : 'f', value : 20 },
     };
+
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms,
         vertexShader:   document.getElementById('point-vert').textContent,
         fragmentShader: document.getElementById('point-frag').textContent,
-        blending:       THREE.AdditiveBlending,
-        depthTest:      false,
-        transparent:    true,
-        alphaTest: 0.5,
+        // blending:       THREE.AdditiveBlending,
+        // depthTest:      false,
+        // transparent:    true,
+        // alphaTest: 0.5,
     });
+
     particleGeometry = new THREE.BufferGeometry();
     window.particleGeometry = particleGeometry;
+
     const alive        = new Float32Array(MAX_PARTICLE_COUNT);
     const positions    = new Float32Array(MAX_PARTICLE_COUNT * 3);
     const colors       = new Float32Array(MAX_PARTICLE_COUNT * 3);
     const timers       = new Float32Array(MAX_PARTICLE_COUNT);
-    for (let i = 0, i3 = 0; i < MAX_PARTICLE_COUNT; i ++, i3 += 3) {
-        positions[i3 + 0] = 0;
-        positions[i3 + 1] = 0;
-        positions[i3 + 2] = 1;
-        alive[i] = 0;
-        timers[i] = 0;
-    }
+
     particleGeometry.addAttribute('alive', new THREE.BufferAttribute(alive, 1));
     particleGeometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
     particleGeometry.addAttribute('timer', new THREE.BufferAttribute(timers, 1));
+
     particleSystem = new THREE.Points(particleGeometry, shaderMaterial);
+
     scene.add(particleSystem);
 }
 
@@ -88,19 +101,30 @@ function updateParticles() {
 }
 
 function update() {
-    // updateParticles();
+}
+
+function getColor(group) {
+    const color = GROUP_COLORS[group] || COLOR_BUCKET.shift();
+    GROUP_COLORS[group] = color;
+    return color;
 }
 
 function moveNode(node, pos) {
-    const x = pos.x * 20;
-    const y = pos.y * 20;
-    particleSystem.geometry.attributes.position.array[node.id + 0] = x;
-    particleSystem.geometry.attributes.position.array[node.id + 1] = y;
-    particleSystem.geometry.attributes.position.array[node.id + 2] = 1;
+    const x  = pos.x * 20;
+    const y  = pos.y * 20;
+    const i3 = node.id * 3;
+    particleSystem.geometry.attributes.position.array[i3 + 0] = x;
+    particleSystem.geometry.attributes.position.array[i3 + 1] = y;
+    particleSystem.geometry.attributes.position.array[i3 + 2] = 1;
 }
 
 function createNode(node, pos) {
+    const color = getColor(node.data.group);
+    const i3 = node.id * 3;
     particleSystem.geometry.attributes.alive.array[node.id] = ALIVE;
+    particleSystem.geometry.attributes.color.array[i3 + 0] = color.r;
+    particleSystem.geometry.attributes.color.array[i3 + 1] = color.g;
+    particleSystem.geometry.attributes.color.array[i3 + 2] = color.b;
     moveNode(node, pos);
     return { node, pos };
 }
@@ -185,7 +209,7 @@ function init() {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(WIDTH, HEIGHT);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0xD0ECF6, 1);
 
     document.body.appendChild(renderer.domElement);
 

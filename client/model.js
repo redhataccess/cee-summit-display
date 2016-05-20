@@ -29,8 +29,6 @@ function connect(node1, node2) {
 function createNode(node) {
     const newNode = graph.newNode(node.data);
     const friendNodes = filter(graph.nodes, { data: { group: node.data.group } });
-    console.log('new node', newNode);
-    console.log('friend nodes', friendNodes);
     each(friendNodes, partial(connect, newNode));
     return newNode;
 }
