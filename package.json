@@ -6,14 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf build",
-    "build": "npm run clean && npm run mk-build-dir && npm run build-client && npm run build-server",
+    "build": "npm run clean && npm run mk-build-dir && npm run copy-assets & npm run build-client && npm run build-server",
+    "copy-assets": "npm run mk-build-dir && cp -r client/img build/client",
     "mk-build-dir": "mkdir -p build/{client,server}",
     "build-client": "./node_modules/.bin/browserify client/main.js -o build/client/bundle.js -dv -t [ babelify --presets [ es2015 ] ]",
     "watch-client": "./node_modules/.bin/watchify client/main.js -o build/client/bundle.js -dv -t [ babelify --presets [ es2015 ] ]",
     "build-server": "./node_modules/.bin/babel server/ --out-dir build/server/",
     "watch-server": "./node_modules/.bin/babel-watch server/server.js",
     "bs-sync": "browser-sync start --server --port 8080 --index index.html -f 'build' './'",
-    "start": "npm run mk-build-dir && npm run start-server & npm run watch-client & npm run watch-server & npm run bs-sync",
+    "start": "npm run mk-build-dir && npm run copy-assets & npm run start-server & npm run watch-client & npm run watch-server & npm run bs-sync",
     "start-server": "nodemon --watch build/server build/server/server.js"
   },
   "author": "Michael Clayton <mclayton@redhat.com>",

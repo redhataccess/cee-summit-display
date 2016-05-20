@@ -1,6 +1,6 @@
 import model from './model';
-import view from './view';
 import net from './net';
+import view from './view';
 
 function update() {
     requestAnimationFrame(update);

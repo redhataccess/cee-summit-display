@@ -12,10 +12,12 @@ function add(data) {
 }
 
 function handleMessage(msg) {
+    console.log(`message received: ${msg.data}`);
     try {
         const obj = JSON.parse(msg.data);
         add(obj);
-    } catch (e) {
+    }
+    catch (e) {
         console.error(e);
     }
 }
@@ -26,8 +28,8 @@ function get() {
 
 const ws = new ReconnectingWebSocket('ws://localhost:8808/stream');
 
-ws.onopen    = () => console.log('open');
+ws.onopen    = () => console.log('websocket connection open');
 ws.onmessage = handleMessage;
-ws.onclose   = () => console.log('close');
+ws.onclose   = () => console.log('websocket connection closed');
 
 export default { get };
