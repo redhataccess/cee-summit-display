@@ -12,7 +12,7 @@ function add(data) {
 }
 
 function handleMessage(msg) {
-    console.log(`message received: ${msg.data}`);
+    // console.log(`message received: ${msg.data}`);
     try {
         const obj = JSON.parse(msg.data);
         add(obj);

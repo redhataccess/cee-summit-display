@@ -8,7 +8,6 @@ function update() {
     const newData = net.get();
 
     model.update(newData);
-    view.update(model.graph);
 }
 
 function init() {

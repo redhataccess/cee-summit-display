@@ -34,4 +34,4 @@ function startSpam() {
     console.log(`POST ${payload}`);
 }
 
-setInterval(startSpam, 100);
+setInterval(startSpam, 50);

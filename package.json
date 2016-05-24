@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf build",
     "build": "npm run clean && npm run mk-build-dir && npm run copy-assets & npm run build-client && npm run build-server",
-    "copy-assets": "npm run mk-build-dir && cp -r client/img build/client",
+    "copy-assets": "npm run mk-build-dir && cp -r client/* build/client/",
     "mk-build-dir": "mkdir -p build/{client,server}",
     "build-client": "./node_modules/.bin/browserify client/main.js -o build/client/bundle.js -dv -t [ babelify --presets [ es2015 ] ]",
     "watch-client": "./node_modules/.bin/watchify client/main.js -o build/client/bundle.js -dv -t [ babelify --presets [ es2015 ] ]",

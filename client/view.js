@@ -97,9 +97,6 @@ function updateParticles() {
     particleGeometry.attributes.color.needsUpdate = true;
 }
 
-function update() {
-}
-
 function getColor(group) {
     const color = GROUP_COLORS[group] || COLOR_BUCKET.shift();
     GROUP_COLORS[group] = color;
@@ -252,4 +249,4 @@ function fetchThenInit() {
 
 fetchThenInit();
 
-export default { update, updateNode };
+export default { updateNode };
