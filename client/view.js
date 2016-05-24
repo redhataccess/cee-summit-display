@@ -1,7 +1,6 @@
 import THREE from 'three';
 import map from 'lodash/map';
 
-const PARTICLE_DURATION  = 1.5; // seconds
 const MAX_PARTICLE_COUNT = 5000;
 const ALIVE              = 1;
 const DEAD               = 0;
@@ -23,8 +22,6 @@ const GROUP_COLORS = {};
 
 let HEIGHT;
 let WIDTH;
-let HALF_HEIGHT;
-let HALF_WIDTH;
 
 let camera;
 let scene;
@@ -35,7 +32,7 @@ let timescale;
 let uniforms;
 let clock;
 
-let particleCount      = 0;
+let particleCount = 0;
 
 function initParticles() {
     uniforms = {
@@ -43,7 +40,7 @@ function initParticles() {
             type : 't',
             value : new THREE.TextureLoader().load('./client/img/particle.png'),
         },
-        size      : { type : 'f', value : 20 },
+        size      : { type : 'f', value : 14 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
@@ -153,8 +150,6 @@ function updateTimescale() {
 function updateWindowSize() {
     HEIGHT      = window.innerHeight;
     WIDTH       = window.innerWidth;
-    HALF_HEIGHT = HEIGHT / 2;
-    HALF_WIDTH  = WIDTH / 2;
 }
 
 function onWindowResize() {
@@ -182,7 +177,7 @@ function init() {
     updateWindowSize();
 
     camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 1000);
-    camera.position.z = 1000;
+    camera.position.z = 300;
     window.camera = camera;
 
     // clock
