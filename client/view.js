@@ -35,10 +35,13 @@ let clock;
 let particleCount = 0;
 
 function initParticles() {
+    const textureLoader = new THREE.TextureLoader();
+    const nodeTexture = textureLoader.load('./client/img/particle.png');
+
     uniforms = {
-        texture   : {
+        texture1  : {
             type : 't',
-            value : new THREE.TextureLoader().load('./client/img/particle.png'),
+            value : nodeTexture,
         },
         size      : { type : 'f', value : 14 },
     };
@@ -49,8 +52,8 @@ function initParticles() {
         fragmentShader: document.getElementById('point-frag').textContent,
         // blending:       THREE.AdditiveBlending,
         // depthTest:      false,
-        // transparent:    true,
-        // alphaTest: 0.5,
+        transparent:    true,
+        alphaTest: 0.5,
     });
 
     particleGeometry = new THREE.BufferGeometry();
