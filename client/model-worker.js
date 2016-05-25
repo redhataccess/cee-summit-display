@@ -20,14 +20,10 @@ const renderer = new Springy.Renderer(
     layout,
     () => {}, // clear screen
     () => {}, // draw edge
-    () => {}  // draw node
+    (node, p) => { postMessage({ node, p }); } // draw node
 );
 
 renderer.start();
-
-renderer.drawNode = (node, p) => {
-    postMessage({ node, p });
-};
 
 function connect(node1, node2) {
     graph.newEdge(node1, node2);

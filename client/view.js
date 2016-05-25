@@ -1,4 +1,4 @@
-import THREE from 'three';
+import THREE from './three';
 import map from 'lodash/map';
 
 const MAX_PARTICLE_COUNT = 5000;
@@ -39,21 +39,20 @@ function initParticles() {
     const nodeTexture = textureLoader.load('./client/img/particle.png');
 
     uniforms = {
-        texture1  : {
+        texture: {
             type : 't',
             value : nodeTexture,
         },
-        size      : { type : 'f', value : 14 },
+        size: { type : 'f', value : 34 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms,
         vertexShader:   document.getElementById('point-vert').textContent,
         fragmentShader: document.getElementById('point-frag').textContent,
-        // blending:       THREE.AdditiveBlending,
+        // blending:       THREE.NoBlending,
         // depthTest:      false,
         transparent:    true,
-        alphaTest: 0.5,
     });
 
     particleGeometry = new THREE.BufferGeometry();
@@ -84,11 +83,17 @@ function updateParticleTimer(v, i, a) {
             particleCount -= 1;
         }
     }
-    return newTime;
+    a[i] = newTime;
 }
 
 function updateParticleTimers() {
-    particleGeometry.attributes.timer.array.map(updateParticleTimer);
+    const arr = particleGeometry.attributes.timer.array;
+    let i = 0;
+    const l = arr.length;
+    while (i < l && particleGeometry.attributes.alive.array[i] === ALIVE) {
+        arr[i] += 1;
+        i++;
+    }
 }
 
 function updateParticles() {
