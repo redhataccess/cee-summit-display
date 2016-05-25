@@ -43,7 +43,7 @@ function initParticles() {
             type : 't',
             value : nodeTexture,
         },
-        size: { type : 'f', value : 34 },
+        size: { type : 'f', value : 18 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
@@ -166,12 +166,39 @@ function onWindowResize() {
     renderer.setSize(WIDTH, HEIGHT);
 }
 
+function updateCamera() {
+    const ta = 0.99;
+    const tb = 1 - ta;
+    particleGeometry.computeBoundingBox();
+    const x = (particleGeometry.boundingBox.max.x + particleGeometry.boundingBox.min.x) / 2;
+    const y = (particleGeometry.boundingBox.max.y + particleGeometry.boundingBox.min.y) / 2;
+    const width = particleGeometry.boundingBox.max.x - particleGeometry.boundingBox.min.x;
+    const height = particleGeometry.boundingBox.max.y - particleGeometry.boundingBox.min.y;
+    const z_denom = (2 * Math.tan(camera.fov*Math.PI/360));
+    const z_w = (width / (WIDTH/HEIGHT)) / z_denom;
+    const z_h = (height) / z_denom;
+
+    updateCamera.target_x = x;
+    updateCamera.target_y = y;
+    updateCamera.target_z = Math.max(z_w, z_h);
+
+    camera.position.x = ta * camera.position.x + tb * updateCamera.target_x;
+    camera.position.y = ta * camera.position.y + tb * updateCamera.target_y;
+    camera.position.z = ta * camera.position.z + tb * updateCamera.target_z;
+    camera.updateProjectionMatrix();
+}
+updateCamera.target_x = 0;
+updateCamera.target_y = 0;
+updateCamera.target_z = 0;
+
 function animate() {
     requestAnimationFrame(animate);
 
     updateTimescale();
 
     updateParticles();
+
+    updateCamera();
 
     renderer.render(scene, camera);
 }
@@ -181,8 +208,8 @@ function init() {
 
     updateWindowSize();
 
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 1000);
-    camera.position.z = 300;
+    camera = new THREE.PerspectiveCamera(1, WIDTH / HEIGHT, 1, 1000);
+    camera.position.z = 990;
     window.camera = camera;
 
     // clock

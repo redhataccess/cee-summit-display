@@ -33,7 +33,7 @@ void main() {
     vAlive = alive;
     vColor = color;
     vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-    gl_PointSize = size * grow(timer);
-    /* gl_PointSize = size * -mvPosition.z; */
+    /* gl_PointSize = size * grow(timer); */
+    gl_PointSize = grow(timer) * size / (cameraPosition.z / 1000.0);
     gl_Position = projectionMatrix * mvPosition;
 }
