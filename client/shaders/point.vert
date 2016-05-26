@@ -23,9 +23,8 @@ float grow(float time) {
         return 1.0;
     }
     else {
-        /* return 0.5; */
         float t = time / GROW_DURATION;
-        return backOut(t);// -1.2*cos(1.2*PI * time / GROW_DURATION) / 2.0 + 0.5;
+        return backOut(t);
     }
 }
 
@@ -34,6 +33,6 @@ void main() {
     vColor = color;
     vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
     /* gl_PointSize = size * grow(timer); */
-    gl_PointSize = grow(timer) * size / (cameraPosition.z / 1000.0);
+    gl_PointSize = grow(timer) * size / (cameraPosition.z / 2000.0);
     gl_Position = projectionMatrix * mvPosition;
 }

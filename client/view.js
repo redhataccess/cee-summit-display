@@ -43,7 +43,7 @@ function initParticles() {
             type : 't',
             value : nodeTexture,
         },
-        size: { type : 'f', value : 18 },
+        size: { type : 'f', value : 5 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
@@ -174,7 +174,13 @@ function updateCamera() {
     const y = (particleGeometry.boundingBox.max.y + particleGeometry.boundingBox.min.y) / 2;
     const width = particleGeometry.boundingBox.max.x - particleGeometry.boundingBox.min.x;
     const height = particleGeometry.boundingBox.max.y - particleGeometry.boundingBox.min.y;
-    const z = height / ( 2 * Math.tan( camera.fov * Math.PI / 360 ) );
+    const aspect = WIDTH / HEIGHT;
+    const padded_height = height + 80;
+    const padded_width  = width + 80;
+    const z_denom = ( 2 * Math.tan( camera.fov * Math.PI / 360 ) )
+    const z_h = padded_height / z_denom;
+    const z_w = padded_width / (aspect * z_denom);
+    const z = Math.max(z_h, z_w);
 
     updateCamera.target_x = x;
     updateCamera.target_y = y;
@@ -206,8 +212,8 @@ function init() {
 
     updateWindowSize();
 
-    camera = new THREE.PerspectiveCamera(1, WIDTH / HEIGHT, 1, 1000);
-    camera.position.z = 990;
+    camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 1, 1000);
+    camera.position.z = 40;
     window.camera = camera;
 
     // clock
