@@ -1,4 +1,4 @@
-import THREE from './three';
+import THREE from 'three';
 import map from 'lodash/map';
 
 const MAX_PARTICLE_COUNT = 5000;
@@ -167,7 +167,7 @@ function onWindowResize() {
 }
 
 function updateCamera() {
-    const ta = 0.99;
+    const ta = 0.999;
     const tb = 1 - ta;
     particleGeometry.computeBoundingBox();
     const x = (particleGeometry.boundingBox.max.x + particleGeometry.boundingBox.min.x) / 2;
