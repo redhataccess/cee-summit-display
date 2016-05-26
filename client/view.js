@@ -1,4 +1,4 @@
-import THREE from './three';
+import THREE from 'three';
 import map from 'lodash/map';
 
 const MAX_PARTICLE_COUNT = 5000;
