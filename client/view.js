@@ -174,13 +174,11 @@ function updateCamera() {
     const y = (particleGeometry.boundingBox.max.y + particleGeometry.boundingBox.min.y) / 2;
     const width = particleGeometry.boundingBox.max.x - particleGeometry.boundingBox.min.x;
     const height = particleGeometry.boundingBox.max.y - particleGeometry.boundingBox.min.y;
-    const z_denom = (2 * Math.tan(camera.fov*Math.PI/360));
-    const z_w = (width / (WIDTH/HEIGHT)) / z_denom;
-    const z_h = (height) / z_denom;
+    const z = height / ( 2 * Math.tan( camera.fov * Math.PI / 360 ) );
 
     updateCamera.target_x = x;
     updateCamera.target_y = y;
-    updateCamera.target_z = Math.max(z_w, z_h);
+    updateCamera.target_z = z;
 
     camera.position.x = ta * camera.position.x + tb * updateCamera.target_x;
     camera.position.y = ta * camera.position.y + tb * updateCamera.target_y;
