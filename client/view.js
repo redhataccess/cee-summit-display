@@ -62,11 +62,13 @@ function initParticles() {
     const positions    = new Float32Array(MAX_PARTICLE_COUNT * 3);
     const colors       = new Float32Array(MAX_PARTICLE_COUNT * 3);
     const timers       = new Float32Array(MAX_PARTICLE_COUNT);
+    const rotating     = new Float32Array(MAX_PARTICLE_COUNT);
 
     particleGeometry.addAttribute('alive', new THREE.BufferAttribute(alive, 1));
     particleGeometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
     particleGeometry.addAttribute('timer', new THREE.BufferAttribute(timers, 1));
+    particleGeometry.addAttribute('rotating', new THREE.BufferAttribute(rotating, 1));
 
     particleSystem = new THREE.Points(particleGeometry, shaderMaterial);
 
@@ -80,7 +82,6 @@ function updateParticleTimer(v, i, a) {
         if (newTime <= 0) {
             newTime = 0;
             particleSystem.geometry.attributes.alive.array[i] = DEAD;
-            particleCount -= 1;
         }
     }
     a[i] = newTime;
@@ -96,6 +97,12 @@ function updateParticleTimers() {
     }
 }
 
+function spinRandomParticle() {
+    const i = Math.floor(Math.random() * particleCount);
+    particleGeometry.attributes.rotating.array[i] = particleGeometry.attributes.timer.array[i];
+}
+window.spinRandomParticle = spinRandomParticle;
+
 function updateParticles() {
     updateParticleTimers();
 
@@ -103,6 +110,7 @@ function updateParticles() {
     particleGeometry.attributes.position.needsUpdate = true;
     particleGeometry.attributes.timer.needsUpdate = true;
     particleGeometry.attributes.color.needsUpdate = true;
+    particleGeometry.attributes.rotating.needsUpdate = true;
 }
 
 function getColor(group) {
@@ -127,6 +135,7 @@ function createNode(node, pos) {
     particleSystem.geometry.attributes.color.array[i3 + 0] = color.r;
     particleSystem.geometry.attributes.color.array[i3 + 1] = color.g;
     particleSystem.geometry.attributes.color.array[i3 + 2] = color.b;
+    particleCount += 1;
     moveNode(node, pos);
     return { node, pos };
 }
@@ -167,7 +176,8 @@ function onWindowResize() {
 }
 
 function updateCamera() {
-    const ta = 0.999;
+    const ta = 0.9;
+    // const ta = 0.999;
     const tb = 1 - ta;
     particleGeometry.computeBoundingBox();
     const x = (particleGeometry.boundingBox.max.x + particleGeometry.boundingBox.min.x) / 2;
