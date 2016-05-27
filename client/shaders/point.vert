@@ -5,8 +5,9 @@ precision highp float;
 #define HALF_PI 1.5707963267948966
 #define QRTR_PI 0.7853981633974483
 #define GROW_DURATION 62.0
-#define ROTATION_SPEED 0.04
-#define ROT_END (TWO_PI + QRTR_PI)
+#define ROTATION_START QRTR_PI
+#define ROTATION_END (TWO_PI + ROTATION_START)
+#define ROTATION_DUR 175.0
 
 uniform float size;
 
@@ -54,7 +55,7 @@ float grow(float time) {
 }
 
 void main() {
-    float rotation = QRTR_PI;
+    float rotation = ROTATION_START;
 
     vAlive = alive;
     vColor = color;
@@ -62,14 +63,16 @@ void main() {
 
     // apply rotation if this node is marked as rotating
     if (rotating > 0.0) {
-        float rot_amt = rotation + ROTATION_SPEED * (vTimer - rotating);
-        if (rot_amt > ROT_END) {
-            rotation = QRTR_PI;
+        float rot_time = timer - rotating;
+        float rot_prog = rot_time / ROTATION_DUR;
+        float rot_easing   = backInOut(rot_prog);
+        if (rot_prog <= 1.0) {
+            rotation = (1.0 - rot_easing) * ROTATION_START + rot_easing * ROTATION_END;
         }
         else {
-            float rot_progress = rot_amt / ROT_END; // 0..1
-            rotation = ROT_END * backInOut(rot_progress);
+            rotation = ROTATION_START;
         }
+
     }
 
     vRotationMat = mat2( cos(rotation), -sin(rotation),

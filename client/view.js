@@ -1,7 +1,7 @@
 import THREE from 'three';
 import map from 'lodash/map';
 
-const MAX_PARTICLE_COUNT = 5000;
+const MAX_PARTICLE_COUNT = 1000;
 const ALIVE              = 1;
 const DEAD               = 0;
 
@@ -43,7 +43,7 @@ function initParticles() {
             type : 't',
             value : nodeTexture,
         },
-        size: { type : 'f', value : 5 },
+        size: { type : 'f', value : 15 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
