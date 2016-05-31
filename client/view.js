@@ -1,9 +1,11 @@
 import THREE from 'three';
 import map from 'lodash/map';
+import throttle from 'lodash/throttle';
 
 const MAX_PARTICLE_COUNT = 1000;
 const ALIVE              = 1;
 const DEAD               = 0;
+const SPIN_INTERVAL      = 15000;
 
 const COLOR_BUCKET = [
     new THREE.Color(0x990000),
@@ -101,10 +103,13 @@ function spinRandomParticle() {
     const i = Math.floor(Math.random() * particleCount);
     particleGeometry.attributes.rotating.array[i] = particleGeometry.attributes.timer.array[i];
 }
+const spinRandomParticleThrottled = throttle(spinRandomParticle, SPIN_INTERVAL);
 window.spinRandomParticle = spinRandomParticle;
 
 function updateParticles() {
     updateParticleTimers();
+
+    spinRandomParticleThrottled();
 
     particleGeometry.attributes.alive.needsUpdate = true;
     particleGeometry.attributes.position.needsUpdate = true;
@@ -176,8 +181,8 @@ function onWindowResize() {
 }
 
 function updateCamera() {
-    const ta = 0.9;
-    // const ta = 0.999;
+    // const ta = 0.9;
+    const ta = 0.994;
     const tb = 1 - ta;
     particleGeometry.computeBoundingBox();
     const x = (particleGeometry.boundingBox.max.x + particleGeometry.boundingBox.min.x) / 2;
@@ -250,7 +255,7 @@ function init() {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(WIDTH, HEIGHT);
-    renderer.setClearColor(0xD0ECF6, 1);
+    renderer.setClearColor(0xD0ECF6, 0);
 
     document.body.appendChild(renderer.domElement);
 
