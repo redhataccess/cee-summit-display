@@ -2,18 +2,19 @@ import THREE from 'three';
 import map from 'lodash/map';
 import throttle from 'lodash/throttle';
 
+window.THREE = THREE;
+
 const MAX_PARTICLE_COUNT = 1000;
 const ALIVE              = 1;
 const DEAD               = 0;
 const SPIN_INTERVAL      = 15000;
 
 const COLOR_BUCKET = [
-    new THREE.Color(0x990000),
+    new THREE.Color(0xEA5400), // non-standard palette
     new THREE.Color(0xCFE2F3),
     new THREE.Color(0x666666),
     new THREE.Color(0xF1C232),
     new THREE.Color(0x134F5C),
-    new THREE.Color(0x000000),
     new THREE.Color(0xCC0000),
     new THREE.Color(0x76A5AF),
     new THREE.Color(0xE5E310),
@@ -21,6 +22,9 @@ const COLOR_BUCKET = [
 ];
 
 const GROUP_COLORS = {};
+
+// how many sprites are in the sprite sheet
+const SPRITE_COUNT = 3;
 
 let HEIGHT;
 let WIDTH;
@@ -38,21 +42,18 @@ let particleCount = 0;
 
 function initParticles() {
     const textureLoader = new THREE.TextureLoader();
-    const nodeTexture = textureLoader.load('./client/img/particle.png');
+    const spriteSheet = textureLoader.load('../client/img/particleSheet.png');
 
     uniforms = {
-        texture: {
-            type : 't',
-            value : nodeTexture,
-        },
-        size: { type : 'f', value : 15 },
+        spriteSheet : { type : 't', value : spriteSheet },
+        uSize       : { type : 'f', value : 15 },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms,
         vertexShader:   document.getElementById('point-vert').textContent,
         fragmentShader: document.getElementById('point-frag').textContent,
-        // blending:       THREE.NoBlending,
+        // blending:       THREE.NormalBlending,
         // depthTest:      false,
         transparent:    true,
     });
@@ -65,12 +66,14 @@ function initParticles() {
     const colors       = new Float32Array(MAX_PARTICLE_COUNT * 3);
     const timers       = new Float32Array(MAX_PARTICLE_COUNT);
     const rotating     = new Float32Array(MAX_PARTICLE_COUNT);
+    const spriteNum    = new Float32Array(MAX_PARTICLE_COUNT);
 
     particleGeometry.addAttribute('alive', new THREE.BufferAttribute(alive, 1));
     particleGeometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
     particleGeometry.addAttribute('timer', new THREE.BufferAttribute(timers, 1));
     particleGeometry.addAttribute('rotating', new THREE.BufferAttribute(rotating, 1));
+    particleGeometry.addAttribute('spriteNum', new THREE.BufferAttribute(spriteNum, 1));
 
     particleSystem = new THREE.Points(particleGeometry, shaderMaterial);
 
@@ -94,7 +97,7 @@ function updateParticleTimers() {
     let i = 0;
     const l = arr.length;
     while (i < l && particleGeometry.attributes.alive.array[i] === ALIVE) {
-        arr[i] += 1;
+        arr[i] += timescale;
         i++;
     }
 }
@@ -133,6 +136,12 @@ function moveNode(node, pos) {
     particleSystem.geometry.attributes.position.array[i3 + 2] = 1;
 }
 
+function assignRandomSprite(id) {
+    const spriteNum = Math.floor(Math.random() * SPRITE_COUNT);
+    particleSystem.geometry.attributes.spriteNum.array[id] = spriteNum;
+    particleGeometry.attributes.spriteNum.needsUpdate = true;
+}
+
 function createNode(node, pos) {
     const color = getColor(node.data.group);
     const i3 = node.id * 3;
@@ -142,6 +151,8 @@ function createNode(node, pos) {
     particleSystem.geometry.attributes.color.array[i3 + 2] = color.b;
     particleCount += 1;
     moveNode(node, pos);
+    assignRandomSprite(node.id);
+    particleGeometry.attributes.rotating.needsUpdate = true;
     return { node, pos };
 }
 

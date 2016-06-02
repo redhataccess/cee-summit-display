@@ -5,8 +5,9 @@ varying vec3 vColor;
 varying float vTimer;
 varying float vRotation;
 varying mat2 vRotationMat;
+varying float vSpriteNum;
 
-uniform sampler2D texture;
+uniform sampler2D spriteSheet;
 
 void main(void) {
     if (vAlive == 0.0) discard;
@@ -14,7 +15,9 @@ void main(void) {
     vec2 p = gl_PointCoord;
     vec2 center = vec2(0.5, 0.5);
     vec2 rot_coord = vRotationMat * (p - center) + center;
-    vec4 sprite_color = texture2D(texture, rot_coord);
+    rot_coord.x /= 4.0;
+    rot_coord.x += vSpriteNum * 0.25;
+    vec4 sprite_color = texture2D(spriteSheet, rot_coord);
 
     /* float x = gl_PointCoord.x; */
     /* float y = gl_PointCoord.y; */

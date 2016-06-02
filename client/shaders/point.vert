@@ -4,22 +4,24 @@ precision highp float;
 #define TWO_PI 6.283185307179586
 #define HALF_PI 1.5707963267948966
 #define QRTR_PI 0.7853981633974483
-#define GROW_DURATION 62.0
+#define GROW_DURATION 0.62
 #define ROTATION_START QRTR_PI
 #define ROTATION_END (TWO_PI + ROTATION_START)
-#define ROTATION_DUR 175.0
+#define ROTATION_DUR 2.05
 
-uniform float size;
+uniform float uSize;
 
 attribute vec3 color;
 attribute float alive;
 attribute float timer;
 attribute float rotating;
+attribute float spriteNum;
 
 varying float vAlive;
 varying vec3 vColor;
 varying float vTimer;
 varying mat2 vRotationMat;
+varying float vSpriteNum;
 
 float backOut(float t) {
     float f = 1.0 - t;
@@ -60,6 +62,7 @@ void main() {
     vAlive = alive;
     vColor = color;
     vTimer = timer;
+    vSpriteNum = spriteNum;
 
     // apply rotation if this node is marked as rotating
     if (rotating > 0.0) {
@@ -79,7 +82,7 @@ void main() {
                          sin(rotation), cos(rotation));
 
     vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-    /* gl_PointSize = size * grow(timer); */
-    gl_PointSize = grow(timer) * size / (cameraPosition.z / 2000.0);
+    /* gl_PointSize = uSize * grow(timer); */
+    gl_PointSize = grow(timer) * uSize / (cameraPosition.z / 1750.0);
     gl_Position = projectionMatrix * mvPosition;
 }
