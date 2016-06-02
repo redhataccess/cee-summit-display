@@ -10,8 +10,12 @@ function update(nodes) {
     modelWorker.postMessage(nodes);
 }
 
-function updateNode(func) {
+function onUpdateNode(func) {
     moveNode = func;
 }
 
-export default { graph, update, updateNode };
+export default {
+    graph,
+    update,
+    onUpdateNode,
+};

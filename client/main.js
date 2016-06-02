@@ -11,7 +11,7 @@ function update() {
 }
 
 function init() {
-    model.updateNode(view.updateNode);
+    model.onUpdateNode(view.updateNode);
     update(); // start the update loop
 }
 
