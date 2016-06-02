@@ -34,4 +34,18 @@ function startSpam() {
     console.log(`POST ${payload}`);
 }
 
-setInterval(startSpam, 400);
+setInterval(startSpam, 75);
+
+
+/*
+
+motion ideas:
+
+1) big cluster of nodes (potential visitors) swirling in the middle of the
+   display.  when user signs up, a node splits off and drifts to their tribe.
+
+2) every so often, a random node will leave its tribe, drift over to another
+   tribe, then drift back.  collaboration!
+
+
+*/
