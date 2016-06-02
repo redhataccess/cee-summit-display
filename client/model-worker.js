@@ -44,6 +44,7 @@ function createNode(node) {
     groupRegister(node, newNode);
     const friendNodes = groups[node.data.group];
     friendNodes.forEach(n => connect(n, newNode));
+    layout.repulsion = graph.nodes.length;
     return newNode;
 }
 
