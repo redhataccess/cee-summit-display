@@ -78,18 +78,6 @@ function initParticles() {
     scene.add(particleSystem);
 }
 
-function updateParticleTimer(v, i, a) {
-    let newTime;
-    if (v !== 0) {
-        newTime = v - timescale;
-        if (newTime <= 0) {
-            newTime = 0;
-            particleSystem.geometry.attributes.alive.array[i] = DEAD;
-        }
-    }
-    a[i] = newTime;
-}
-
 function updateParticleTimers() {
     const arr = particleGeometry.attributes.timer.array;
     let i = 0;
@@ -199,12 +187,12 @@ function updateCamera() {
     const width = particleGeometry.boundingBox.max.x - particleGeometry.boundingBox.min.x;
     const height = particleGeometry.boundingBox.max.y - particleGeometry.boundingBox.min.y;
     const aspect = WIDTH / HEIGHT;
-    const padded_height = height + 80;
-    const padded_width  = width + 80;
-    const z_denom = ( 2 * Math.tan( camera.fov * Math.PI / 360 ) )
-    const z_h = padded_height / z_denom;
-    const z_w = padded_width / (aspect * z_denom);
-    const z = Math.max(z_h, z_w);
+    const paddedHeight = height + 120;
+    const paddedWidth  = width + 120;
+    const zDenom = (2 * Math.tan(camera.fov * Math.PI / 360));
+    const zh = paddedHeight / zDenom;
+    const zw = paddedWidth / (aspect * zDenom);
+    const z = Math.max(zh, zw);
 
     updateCamera.target_x = x;
     updateCamera.target_y = y;
