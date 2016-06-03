@@ -1,13 +1,12 @@
 import THREE from 'three';
 import map from 'lodash/map';
 import throttle from 'lodash/throttle';
+import config from './config';
 
-window.THREE = THREE;
+const MAX_PARTICLE_COUNT = config.MAX_NODES;
+const SPIN_INTERVAL      = config.SPIN_INTERVAL;
 
-const MAX_PARTICLE_COUNT = 1000;
 const ALIVE              = 1;
-const DEAD               = 0;
-const SPIN_INTERVAL      = 15000;
 
 const COLOR_BUCKET = [
     new THREE.Color(0xEA5400), // non-standard palette

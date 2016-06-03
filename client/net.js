@@ -1,10 +1,15 @@
 import ReconnectingWebSocket from 'reconnectingwebsocket';
 import each from 'lodash/each';
+import config from './config';
 
 const buffer = [];
+let nodeCount = 0;
 
 function push(d) {
-    buffer.push(d);
+    if (nodeCount < config.MAX_NODES) {
+        buffer.push(d);
+        nodeCount++;
+    }
 }
 
 function add(data) {
