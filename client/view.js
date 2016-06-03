@@ -58,7 +58,6 @@ function initParticles() {
     });
 
     particleGeometry = new THREE.BufferGeometry();
-    window.particleGeometry = particleGeometry;
 
     const alive        = new Float32Array(MAX_PARTICLE_COUNT);
     const positions    = new Float32Array(MAX_PARTICLE_COUNT * 3);
@@ -239,7 +238,6 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 1, 1000);
     camera.position.z = 40;
-    window.camera = camera;
 
     // clock
 
