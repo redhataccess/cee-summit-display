@@ -224,7 +224,7 @@ function init() {
 
     updateWindowSize();
 
-    camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 1, 1000);
+    camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 1, 2000);
     camera.position.z = 40;
 
     // clock
