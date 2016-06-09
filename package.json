@@ -44,6 +44,7 @@
     "lodash": "^4.12.0",
     "reconnectingwebsocket": "^1.0.0",
     "springy": "^2.7.1",
+    "three": "^0.77.1",
     "ws": "^1.1.0"
   }
 }
