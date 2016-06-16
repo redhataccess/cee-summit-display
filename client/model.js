@@ -15,7 +15,6 @@ function onUpdateNode(func) {
 }
 
 export default {
-    graph,
     update,
     onUpdateNode,
 };
