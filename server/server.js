@@ -28,11 +28,25 @@ server.register(HapiWebSocket, () => {
         },
     });
     server.route({
+        method: 'OPTIONS',
+        path: '/record',
+        handler: (request, reply) => {
+            reply()
+            .header('Access-Control-Allow-Origin', '*')
+            .header('Access-Control-Allow-Headers', 'charset, content-type')
+            .header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+        },
+    });
+    server.route({
         method: 'POST',
         path: '/record',
         handler: (request, reply) => {
+            console.log('POST /record received');
             buffer.push({ id: ++lastId, data: request.payload });
-            reply('recorded');
+            reply('recorded')
+                .header('Access-Control-Allow-Origin', '*')
+                .header('Access-Control-Allow-Headers', 'charset, content-type')
+                .header('Access-Control-Allow-Methods', 'POST, OPTIONS');
         },
     });
     server.route({
