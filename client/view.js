@@ -8,20 +8,6 @@ const SPIN_INTERVAL      = config.SPIN_INTERVAL;
 
 const ALIVE              = 1;
 
-const COLOR_BUCKET = [
-    new THREE.Color(0xEA5400), // non-standard palette
-    new THREE.Color(0xCFE2F3),
-    new THREE.Color(0x666666),
-    new THREE.Color(0xF1C232),
-    new THREE.Color(0x134F5C),
-    new THREE.Color(0xCC0000),
-    new THREE.Color(0x76A5AF),
-    new THREE.Color(0xE5E310),
-    new THREE.Color(0x76E0EE),
-];
-
-const GROUP_COLORS = {};
-
 // how many sprites are in the sprite sheet
 const SPRITE_COUNT = 3;
 
@@ -107,12 +93,6 @@ function updateParticles() {
     particleGeometry.attributes.rotating.needsUpdate = true;
 }
 
-function getColor(group) {
-    const color = GROUP_COLORS[group] || COLOR_BUCKET.shift();
-    GROUP_COLORS[group] = color;
-    return color;
-}
-
 function moveNode(node, pos) {
     const x  = pos.x * 20;
     const y  = pos.y * 20;
@@ -129,7 +109,7 @@ function assignRandomSprite(id) {
 }
 
 function createNode(node, pos) {
-    const color = getColor(node.data.group);
+    const color = new THREE.Color(node.data.color);
     const i3 = node.id * 3;
     particleSystem.geometry.attributes.alive.array[node.id] = ALIVE;
     particleSystem.geometry.attributes.color.array[i3 + 0] = color.r;
