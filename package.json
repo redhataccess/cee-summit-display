@@ -42,6 +42,8 @@
     "hapi": "^13.4.0",
     "hapi-plugin-websocket": "^0.9.2",
     "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "ractive": "^0.7.3",
     "reconnectingwebsocket": "^1.0.0",
     "springy": "^2.7.1",
     "three": "^0.77.1",

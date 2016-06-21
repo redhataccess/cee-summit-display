@@ -41,7 +41,7 @@
             font-family: Lato, sans-serif;
         }
 
-        aside[id^=event] {
+        .event {
             opacity: 0;
             position: absolute;
             width: 25vw;
@@ -58,20 +58,44 @@
             border-radius: 3px;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
         }
-        aside.show {
+        .event.show {
             opacity: 1;
             -webkit-filter: blur(0px);
             -webkit-transition: 0.618s -webkit-filter ease-in-out, 0.618s opacity ease-in-out;
+        }
+        #events {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
         }
         </style>
     </head>
     <body>
         <canvas id="graph"></canvas>
 
-        <aside id="event-1">
-            <h1>Security Meetup</h1>
-            <p>At 1 PM, meet your fellow hackers at the atrium.</p>
-        </aside>
+        <div id="events">HELLO</div>
+
+        <!-- <aside id="event-1"> -->
+        <!--     <h1>Security Meetup</h1> -->
+        <!--     <p>At 1 PM, meet your fellow hackers at the atrium.</p> -->
+        <!-- </aside> -->
+
+        <script type="text/ractive" id="events-template">
+            {{#each eventList:i}}
+                <div class="event {{ currentEvent === i ? 'show' : '' }}">
+                    <h1>
+                        {{ eventList[i].group }}
+                    </h1>
+                        <p>
+                        <strong>Attend this session</strong>: {{ eventList[i].message }}, starting
+                        <strong>{{ moment(eventList[i].date).fromNow() }}</strong> in room
+                        <strong>{{ eventList[i].room }}</strong>.
+                        </p>
+                </div>
+            {{/each}}
+        </script>
     </body>
 
     <script src="client/shaders/point.vert"  id="point-vert" type="x-shader/x-vertex"></script>
