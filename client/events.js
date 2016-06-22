@@ -1,17 +1,27 @@
 import Ractive from 'ractive';
-import nth from './nth';
+import throttle from 'lodash/throttle';
 import eventList from './event-list';
 import moment from 'moment';
 
-const EVENT_INTERVAL = 360; // rotate displayed event every N frames
+const EVENT_INTERVAL = 14000; // ms
 
 let ractive;
 let currentEvent = 0; // event index
 
-const rotateEvent = nth(() => {
+const rotateEvent = throttle(() => {
+    let show = true;
     currentEvent += 1;
-    currentEvent %= eventList.length;
-    ractive.set('currentEvent', currentEvent);
+    if (eventList[currentEvent].date) {
+        const eventDate = moment(eventList[currentEvent].date);
+        const timeUntil = eventDate.diff();
+        if (timeUntil < 0) {
+            show = false;
+            rotateEvent();
+        }
+    }
+    if (show) {
+        ractive.set('currentEvent', currentEvent);
+    }
 }, EVENT_INTERVAL);
 
 function start() {
