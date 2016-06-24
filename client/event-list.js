@@ -510,6 +510,7 @@ export default _.shuffle([
     /***************************************************************************/
     /* RED HAT CUSTOMER PORTAL
     /***************************************************************************/
+
     {
         group: 'Red Hat Customer Portal',
         color: '#E5E310',
@@ -519,16 +520,24 @@ export default _.shuffle([
     {
         group: 'Red Hat Customer Portal',
         color: '#E5E310',
-        message: 'Connect with the Red Hat Customer Portal team on Twitter @RedHatSupport',
+        message: 'Attend the Customer Portal meet-up with Senior Product Manager James Bailey.',
+        date: '2016 June 28 6:00 PM ',
+        room: 'Partner Pavilion, Subscription Services pod in the Red Hat booth',
+    },
+    {
+        group: 'Red Hat Customer Portal',
+        color: '#E5E310',
+        message: 'Customer Portal meet-up with Senior Product Manager James Bailey.',
+        date: '2016 June 29 6:00 PM ',
+        room: 'Partner Pavilion, Subscription Services pod in the Red Hat booth',
     },
 
     {
         group: 'Red Hat Customer Portal',
         color: '#E5E310',
-        message: 'Customer 360 with Apache Spark, Openshift by Red Hat, and Red Hat Gluster Storage ',
-        date: '2016 June 29 3:30 PM ',
-        room: '2018',
+        message: 'Connect with the Red Hat Customer Portal team on Twitter @RedHatSupport',
     },
+
 
     {
         group: 'Red Hat Customer Portal',
