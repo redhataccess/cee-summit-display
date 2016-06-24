@@ -3,7 +3,7 @@ import throttle from 'lodash/throttle';
 import eventList from './event-list';
 import moment from 'moment';
 
-const EVENT_INTERVAL = 14000; // ms
+const EVENT_INTERVAL = 12000; // ms
 
 let ractive;
 let currentEvent = 0; // event index
