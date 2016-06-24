@@ -42,7 +42,6 @@
             background-repeat: no-repeat, no-repeat;
             font-family: Overpass, sans-serif;
         }
-
         .event {
             position: absolute;
             width: 30vw;
@@ -60,6 +59,7 @@
             padding: 20px;
             color: white;
         }
+
         .event.show {
             z-index: 2;
             opacity: 1;
@@ -125,7 +125,7 @@
                         {{ eventList[i].message }}
                     </div>
                     {{#if eventList[i].date && eventList[i].room }}
-                    <div class="session-whenwhere"> Starting <strong>{{ moment(eventList[i].date).fromNow() }}</strong> in room <strong>{{ eventList[i].room }}</strong> </div>
+                    <div class="session-whenwhere"> Attend this session <strong>{{ moment(eventList[i].date).fromNow() }}</strong> in room <strong>{{ eventList[i].room }}</strong> </div>
                     {{/if}}
                 </div>
             {{/each}}
