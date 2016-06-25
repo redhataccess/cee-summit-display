@@ -87,10 +87,10 @@
         .event .session-message {
             clear: both;
             line-height: 1.3;
-            margin: 20px 0 30px;
+            margin: 20px 0 36px;
         }
         .event .session-message:last-child {
-            margin-bottom: 16px;
+            margin-bottom: 0;
         }
 
         .event .session-name {
@@ -98,14 +98,14 @@
             text-transform: uppercase;
             float: left;
             font-size: 26px;
-            margin: 18px 0 30px;
+            margin: 6px 0 24px;
         }
         .event .session-diamond {
-            width: 40px;
             float: left;
-            height: 40px;
+            width: 24px;
+            height: 24px;
             clear: right;
-            transform: translate(24px, 17px) rotate(45deg);
+            transform: translate(22px, 13px) rotate(45deg);
         }
         </style>
     </head>
@@ -125,7 +125,7 @@
                     <div class="session-name" > {{ eventList[i].group }} </div>
                     <div class="session-diamond" style="background: {{ eventList[i].color }}; {{ eventList[i].group === 'DevOps' ? 'border: 1px solid rgba(255,255,255,0.4)' : '' }}"></div>
                     <div class="session-message">
-                        {{ eventList[i].message }}
+                        {{ eventList[i].message }}.
                     </div>
                     {{#if eventList[i].date && eventList[i].room }}
                     <div class="session-whenwhere"> Attend this session <strong>{{ moment(eventList[i].date).fromNow() }}</strong> in room <strong>{{ eventList[i].room }}</strong> </div>
