@@ -11,6 +11,7 @@ let currentEvent = 0; // event index
 const rotateEvent = throttle(() => {
     let show = true;
     currentEvent += 1;
+    currentEvent %= eventList.length;
     if (eventList[currentEvent].date) {
         const eventDate = moment(eventList[currentEvent].date);
         const timeUntil = eventDate.diff();
