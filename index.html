@@ -114,21 +114,16 @@
 
         <div id="events"></div>
 
-        <!-- <aside id="event-1"> -->
-        <!--     <h1>Security Meetup</h1> -->
-        <!--     <p>At 1 PM, meet your fellow hackers at the atrium.</p> -->
-        <!-- </aside> -->
-
         <script type="text/ractive" id="events-template">
             {{#each eventList:i}}
-                <div class="event {{ currentEvent === i ? 'show' : '' }}">
+                <div class="event {{ currentEvent === i ? 'show' : '' }}" style="left: {{ positionX }}; bottom: {{ positionY }}">
                     <div class="session-name" > {{ eventList[i].group }} </div>
                     <div class="session-diamond" style="background: {{ eventList[i].color }}; {{ eventList[i].group === 'DevOps' ? 'border: 1px solid rgba(255,255,255,0.4)' : '' }}"></div>
                     <div class="session-message">
-                        {{ eventList[i].message }}.
+                        {{{ eventList[i].message }}}.
                     </div>
                     {{#if eventList[i].date && eventList[i].room }}
-                    <div class="session-whenwhere"> Attend this session <strong>{{ moment(eventList[i].date).fromNow() }}</strong> in room <strong>{{ eventList[i].room }}</strong> </div>
+                    <div class="session-whenwhere"> Attend this session <strong>{{ eventList[i].fromNow }}</strong> in room <strong>{{ eventList[i].room }}</strong> </div>
                     {{/if}}
                 </div>
             {{/each}}

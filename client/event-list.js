@@ -535,7 +535,7 @@ export default _.shuffle([
     {
         group: 'Red Hat Customer Portal',
         color: '#E5E310',
-        message: 'Connect with the Red Hat Customer Portal team on Twitter @RedHatSupport',
+        message: 'Connect with the Red Hat Customer Portal team on Twitter <strong>@RedHatSupport</strong>',
     },
 
 
@@ -559,20 +559,20 @@ export default _.shuffle([
     /* OTHER
     /***************************************************************************/
     {
-        group: 'Other',
+        group: 'Red Hat Summit',
         color: '#76E0EE',
         message: 'Attend the technology roadmap sessions to connect with peers and talk with product experts',
     },
 
     {
-        group: 'Other',
+        group: 'Red Hat Summit',
         color: '#76E0EE',
-        message: 'Join the conversation on Twitter @RedHatSummit',
+        message: 'Join the conversation on Twitter <strong>@RedHatSummit</strong>',
     },
 
     {
-        group: 'Other',
+        group: 'Red Hat Summit',
         color: '#76E0EE',
-        message: 'Connect with the Red Hat Customer Experience team on twitter.  @RedHatSupport',
+        message: 'Connect with the Red Hat Customer Experience team on Twitter <strong>@RedHatSupport</strong>',
     },
 ]);
